@@ -1,0 +1,10 @@
+{
+  "name": "smart-contracts-module",
+  "license": "UNLICENSED",
+  "version": "1.0.0",
+  "dependencies": {
+    "truffle": "^4.0.7",
+    "truffle-contract": "^3.0.5",
+    "web3": "^0.20.5"
+  }
+}
