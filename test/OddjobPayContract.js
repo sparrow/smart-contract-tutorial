@@ -108,13 +108,13 @@ contract('OddjobPayContract', accounts => {
     })
   })
 
-  describe('sendPrizeToImplementer action', () => {
+  describe('sendPrizeToTasker action', () => {
     describe('msg.sender validation', () => {
       it('can be triggered by deployer', done => {
         (async () => {
           const deployedContract = await OddjobPayContract.deployed()
 
-          deployedContract.sendPrizeToImplementer({ from: deployer })
+          deployedContract.sendPrizeToTasker({ from: deployer })
             .then(() => done())
             .catch(() => done('e'))
         })()
@@ -124,7 +124,7 @@ contract('OddjobPayContract', accounts => {
         (async () => {
           const deployedContract = await OddjobPayContract.deployed()
 
-          deployedContract.sendPrizeToImplementer({ from: client })
+          deployedContract.sendPrizeToTasker({ from: client })
             .then(() => done('e'))
             .catch(() => done())
         })()
@@ -134,7 +134,7 @@ contract('OddjobPayContract', accounts => {
         (async () => {
           const deployedContract = await OddjobPayContract.deployed()
 
-          deployedContract.sendPrizeToImplementer({ from: tasker })
+          deployedContract.sendPrizeToTasker({ from: tasker })
             .then(() => done('e'))
             .catch(() => done())
         })()
@@ -144,7 +144,7 @@ contract('OddjobPayContract', accounts => {
         (async () => {
           const deployedContract = await OddjobPayContract.deployed()
 
-          deployedContract.sendPrizeToImplementer({ from: unknownAccount })
+          deployedContract.sendPrizeToTasker({ from: unknownAccount })
             .then(() => done('e'))
             .catch(() => done())
         })()
@@ -163,7 +163,7 @@ contract('OddjobPayContract', accounts => {
       const prizeAmountWeiBefore = await deployedContract.payAmount()
       const prizeAmountBefore = web3.fromWei(prizeAmountWeiBefore, 'ether')
 
-      await deployedContract.sendPrizeToImplementer({ from: deployer })
+      await deployedContract.sendPrizeToTasker({ from: deployer })
 
       const prizeAmountWeiAfter = await deployedContract.payAmount()
       const prizeAmountAfter = web3.fromWei(prizeAmountWeiAfter, 'ether')
