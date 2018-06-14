@@ -22,13 +22,13 @@ contract OddjobPayContract {
     payAmount += msg.value;
   }
 
-  function sendPrizeToTasker() public {
+  function sendPayAmountToTasker() public {
     require(deployer == msg.sender);
 
-    // transfer prize amount to tasker
+    // transfer pay amount to tasker
     tasker.transfer(payAmount);
 
-    // nullify prize amount manually
+    // nullify pay amount manually
     payAmount = 0;
   }
 }

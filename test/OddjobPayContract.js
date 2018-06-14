@@ -50,7 +50,7 @@ contract('OddjobPayContract', accounts => {
 
   describe('payable fallback', () => {
     describe('msg.sender validation', () => {
-      it('deployer can not increase prize amount', done => {
+      it('deployer can not increase pay amount', done => {
         (async () => {
           const deployedContract = await OddjobPayContract.deployed()
 
@@ -60,7 +60,7 @@ contract('OddjobPayContract', accounts => {
         })()
       })
 
-      it('tasker can not increase prize amount', done => {
+      it('tasker can not increase pay amount', done => {
         (async () => {
           const deployedContract = await OddjobPayContract.deployed()
 
@@ -70,7 +70,7 @@ contract('OddjobPayContract', accounts => {
         })()
       })
 
-      it('unknown account can not increase prize amount', done => {
+      it('unknown account can not increase pay amount', done => {
         (async () => {
           const deployedContract = await OddjobPayContract.deployed()
 
@@ -80,7 +80,7 @@ contract('OddjobPayContract', accounts => {
         })()
       })
 
-      it('only client can increase prize amount', done => {
+      it('only client can increase pay amount', done => {
         (async () => {
           const deployedContract = await OddjobPayContract.deployed()
 
@@ -91,30 +91,30 @@ contract('OddjobPayContract', accounts => {
       })
     })
 
-    it('increases prize amount', async () => {
+    it('increases pay amount', async () => {
       const deployedContract = await OddjobPayContract.deployed()
 
-      const prizeAmountWeiBefore = await deployedContract.payAmount()
-      const prizeAmountBefore = web3.fromWei(prizeAmountWeiBefore, 'ether')
+      const payAmountWeiBefore = await deployedContract.payAmount()
+      const payAmountBefore = web3.fromWei(payAmountWeiBefore, 'ether')
 
       await deployedContract.sendTransaction({
         from: client, value: web3.toWei(5, 'ether')
       })
 
-      const prizeAmountWeiAfter = await deployedContract.payAmount()
-      const prizeAmountAfter = web3.fromWei(prizeAmountWeiAfter, 'ether')
+      const payAmountWeiAfter = await deployedContract.payAmount()
+      const payAmountAfter = web3.fromWei(payAmountWeiAfter, 'ether')
 
-      expect(prizeAmountAfter - prizeAmountBefore).to.equal(5)
+      expect(payAmountAfter - payAmountBefore).to.equal(5)
     })
   })
 
-  describe('sendPrizeToTasker action', () => {
+  describe('sendPayAmountToTasker action', () => {
     describe('msg.sender validation', () => {
       it('can be triggered by deployer', done => {
         (async () => {
           const deployedContract = await OddjobPayContract.deployed()
 
-          deployedContract.sendPrizeToTasker({ from: deployer })
+          deployedContract.sendPayAmountToTasker({ from: deployer })
             .then(() => done())
             .catch(() => done('e'))
         })()
@@ -124,7 +124,7 @@ contract('OddjobPayContract', accounts => {
         (async () => {
           const deployedContract = await OddjobPayContract.deployed()
 
-          deployedContract.sendPrizeToTasker({ from: client })
+          deployedContract.sendPayAmountToTasker({ from: client })
             .then(() => done('e'))
             .catch(() => done())
         })()
@@ -134,7 +134,7 @@ contract('OddjobPayContract', accounts => {
         (async () => {
           const deployedContract = await OddjobPayContract.deployed()
 
-          deployedContract.sendPrizeToTasker({ from: tasker })
+          deployedContract.sendPayAmountToTasker({ from: tasker })
             .then(() => done('e'))
             .catch(() => done())
         })()
@@ -144,14 +144,14 @@ contract('OddjobPayContract', accounts => {
         (async () => {
           const deployedContract = await OddjobPayContract.deployed()
 
-          deployedContract.sendPrizeToTasker({ from: unknownAccount })
+          deployedContract.sendPayAmountToTasker({ from: unknownAccount })
             .then(() => done('e'))
             .catch(() => done())
         })()
       })
     })
 
-    it('nullifies prize amount', async () => {
+    it('nullifies pay amount', async () => {
       const deployedContract = await OddjobPayContract.new(
         client, tasker, { from: deployer }
       )
@@ -160,16 +160,16 @@ contract('OddjobPayContract', accounts => {
         from: client, value: web3.toWei(5, 'ether')
       })
 
-      const prizeAmountWeiBefore = await deployedContract.payAmount()
-      const prizeAmountBefore = web3.fromWei(prizeAmountWeiBefore, 'ether')
+      const payAmountWeiBefore = await deployedContract.payAmount()
+      const payAmountBefore = web3.fromWei(payAmountWeiBefore, 'ether')
 
-      await deployedContract.sendPrizeToTasker({ from: deployer })
+      await deployedContract.sendPayAmountToTasker({ from: deployer })
 
-      const prizeAmountWeiAfter = await deployedContract.payAmount()
-      const prizeAmountAfter = web3.fromWei(prizeAmountWeiAfter, 'ether')
+      const payAmountWeiAfter = await deployedContract.payAmount()
+      const payAmountAfter = web3.fromWei(payAmountWeiAfter, 'ether')
 
-      expect(prizeAmountAfter - prizeAmountBefore).to.equal(-5)
-      expect(prizeAmountAfter.toNumber()).to.equal(0)
+      expect(payAmountAfter - payAmountBefore).to.equal(-5)
+      expect(payAmountAfter.toNumber()).to.equal(0)
     })
   })
 })
