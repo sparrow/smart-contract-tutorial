@@ -52,7 +52,7 @@ const run = async () => {
 
   await printBalancesToConsole()
 
-  await smartContract.sendPrizeToTasker({ from: deployer })
+  await smartContract.sendPayAmountToTasker({ from: deployer })
 
   await printBalancesToConsole()
 }
